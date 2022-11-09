@@ -1,10 +1,19 @@
-import React, {useState} from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Dimensions, Switch, SafeAreaView, StatusBar} from 'react-native'
+import React, {useState, useEffect} from "react";
+import { View, Text,FlatList, TouchableOpacity, StyleSheet, Dimensions, Switch, SafeAreaView, StatusBar} from 'react-native'
 import Icon from "react-native-vector-icons/Ionicons";
+import { BASE_URL } from '../loginRegister/config/API';
+import socketIO from "socket.io-client";
 
 const {width, height} = Dimensions.get("window");
+const ENDPOINT = "http://192.168.1.3:3000";
+const socket = socketIO(ENDPOINT)
 
 const SettingScreen = ({navigation}) => {
+    var user_id = "";
+    // console.log(user_id);
+  const [dataUser, setDataUser] = useState([]);
+
+
     const [isBackground, setBackground] = useState(false);
     const backgroundSwitch = () => setBackground(previousBackground => !previousBackground);
 
@@ -17,6 +26,60 @@ const SettingScreen = ({navigation}) => {
     const background = isBackground ? styles.blackBackground : styles.whiteBackground;
     const title = isBackground ? styles.whiteTitle : styles.blackTitle;
     const iconColor = isBackground ? styles.whiteIcon : styles.blackIcon;
+
+    const ItemUser = ({item}) => {
+        user_id = item.unique_id;
+        var email = item.email;
+        return (
+            <View style={styles.container}>
+                <View style={styles.item}>
+                    <Text style={styles.title}>{`${user_id}`}</Text>
+                    <Text style={styles.title}>{`${email}`}</Text>
+                </View>
+            </View>
+    
+        );
+    };
+
+    useEffect(() => {
+        getUser();
+        
+      }, []);
+
+      getUser = () => {
+        const URL = BASE_URL + "user.php"
+        fetch(URL)
+            .then((res) => res.json())
+            .then((resJson) => {
+                setDataUser(resJson.data)
+            }).catch((error) => {
+                console.log('Error: ', error)
+            })
+    };
+  
+
+    var logout = () => {
+        var LoginAPI = BASE_URL + "logout.php"
+        var headers = {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        };
+
+        var data = {
+            logout_id : user_id
+        };
+
+        fetch(LoginAPI,
+            {
+                method: 'POST',
+                headers: headers,
+                body: JSON.stringify(data)
+            }
+        ).then((response) => response.json())
+            .catch((error) => {
+                console.log(error);
+            })
+    }
     
     
     return(
@@ -43,7 +106,7 @@ const SettingScreen = ({navigation}) => {
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.touchableContainer} 
                         onPress={() => {
-                        navigation.navigate('ChangePass', isBackground)
+                        navigation.navigate('ChangePass', isBackground) 
                         
                     }}>
                         <Text style={styles.title3}>Change Password</Text>
@@ -101,10 +164,23 @@ const SettingScreen = ({navigation}) => {
                         <Icon name="chevron-forward-outline" size={20} style= {iconColor}></Icon>
                     </TouchableOpacity>
                 </View>
-                <TouchableOpacity style={{justifyContent: "center", alignItems: "center", flexDirection: "row"}}>
+                <TouchableOpacity onPress={() => { 
+                    logout();
+                    navigation.replace("Login");
+                    socket.emit("logout");
+                    
+                }} style={{justifyContent: "center", alignItems: "center", flexDirection: "row"}}>
                     <Icon name="log-out-outline" size={30} style={iconColor}></Icon>
                     <Text style={[styles.title3, title]}>LOGOUT</Text>
                 </TouchableOpacity>
+
+                <TouchableOpacity onPress={() => { }}>
+                <FlatList
+                    style={styles.viewUser}
+                    data={dataUser}
+                    renderItem={ItemUser}
+                    keyExtractor={item => `key-${item.unique_id}`}/>
+            </TouchableOpacity>
             </View>
         </SafeAreaView>
     );

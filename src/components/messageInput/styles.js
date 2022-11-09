@@ -1,6 +1,9 @@
 import React from 'react'
 import { StyleSheet } from 'react-native'
 
+    const violet = '#ad40af';
+    const orange = '#F8D548';
+
 const styles = StyleSheet.create({
     root: {
         padding: 10,
@@ -42,6 +45,37 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: 5
+    },
+
+
+    /////message
+    leftContainer: {
+        backgroundColor: orange,
+        marginLeft: 10,
+        marginRight: 'auto',
+      },
+  
+      rightContainer: {
+        backgroundColor: violet,
+        marginLeft: 'auto',
+        marginRight: 10,
+      },
+
+      viewIncoming: {
+        marginLeft: 50
+    },
+
+    viewOutGoing: {
+        alignItems: "flex-end",
+        backgroundColor: "#FFF",
+        marginRight: 0
+    },
+
+    container: {
+        padding: 10,
+        margin: 10,
+        borderRadius: 10,
+        maxWidth: '70%',
     },
 });
 

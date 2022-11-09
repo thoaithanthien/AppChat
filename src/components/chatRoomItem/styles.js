@@ -53,6 +53,32 @@ const styles = StyleSheet.create({
     text: {
       color: 'grey',
     },
+
+    isOnline: {
+      backgroundColor: '#16D0FE',
+        width: 18,
+        height: 18,
+        borderWidth: 1,
+        borderColor: '#fff',
+        borderRadius: 10,
+        position: 'absolute',
+        right: 20,
+        bottom: 5
+    },
+  
+    isOffline: {
+      backgroundColor: '#ccc',
+        width: 18,
+        height: 18,
+        borderWidth: 1,
+        borderColor: '#fff',
+        borderRadius: 10,
+        position: 'absolute',
+        right: 20,
+        bottom: 5
+        // top: 10,
+    }
   });
+
 
   export default styles;

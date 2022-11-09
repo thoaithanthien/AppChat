@@ -12,6 +12,11 @@ import {
 import React, {useState} from 'react';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import {BASE_URL} from '../config/API';
+import socketIO from 'socket.io-client';
+
+const ENDPOINT = "http://192.168.1.5:3000";
+const socket = socketIO(ENDPOINT)
 
 const Login = ({navigation}) => {
   const [email, setEmail] = useState('');
@@ -21,7 +26,7 @@ const Login = ({navigation}) => {
     if (email.length == 0 || password == 0) {
       alert('Vui lòng nhập đầy đủ thông tin');
     } else {
-      var LoginAPI = 'http://192.168.201.1:8080/users/api/login.php';
+      var LoginAPI = BASE_URL + 'login.php';
       var headers = {
         Accept: 'application/json',
         'Content-Type': 'application/json',
@@ -40,8 +45,9 @@ const Login = ({navigation}) => {
         .then(response => response.json())
         .then(response => {
           if ((response = 'Dang nhap thanh cong')) {
-            alert('Đăng nhập thành công');
+            // alert('Đăng nhập thành công');
             navigation.navigate('Bottom');
+            socket.emit('login');
           }
         })
         .catch(error => {
@@ -58,6 +64,8 @@ const Login = ({navigation}) => {
     Keyboard.dismiss();
     
   };
+
+  
   return (
     <SafeAreaView style={styles.container}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>

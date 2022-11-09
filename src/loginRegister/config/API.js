@@ -1,7 +1,8 @@
-export const registerAPI = (userName, Email, Password) => {
+export const registerAPI = (userName, Email, Password, Image) => {
     var username = userName;
     var email = Email;
     var pass = Password;
+    var img = Image;
 
     var InsertAPI = "http://192.168.201.1:8080/users/api/register.php"
     var headers = {
@@ -12,7 +13,8 @@ export const registerAPI = (userName, Email, Password) => {
     var data = {
         username: username,
         email: email,
-        password: pass
+        password: pass,
+        img: img
     };
 
     fetch(InsertAPI,
@@ -23,6 +25,7 @@ export const registerAPI = (userName, Email, Password) => {
         }
     ).then((response) => response.json())
         .then((response) => {
+            if(response = "Dang ky thanh cong")
             alert("Đăng ký thành công");
 
         })
@@ -33,3 +36,5 @@ export const registerAPI = (userName, Email, Password) => {
                 alert("Error: " + error))
         })
 }
+
+export const BASE_URL = "http://192.168.201.1:8080/users/api/";

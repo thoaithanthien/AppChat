@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
       },
     
     badgeContainer: {
-        backgroundColor: '#09EF24',
+        backgroundColor: '#16D0FE',
         width: 18,
         height: 18,
         borderWidth: 1,

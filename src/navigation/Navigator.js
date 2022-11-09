@@ -15,6 +15,7 @@ import EditProfile from '../components/setting/EditProfile'
 ////////////////////////
 import LoginScreen from '../loginRegister/screens/LoginScreen';
 import RegisterScreen from '../loginRegister/screens/RegisterScreen';
+import demo from '../screens/demo';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -23,8 +24,10 @@ const Stack = createNativeStackNavigator();
   function MessageStack() {
     return (
       <Stack.Navigator screenOptions={{headerShown: true}}>
+        {/* <Stack.Screen name="Home" component={Home}/> */}
         <Stack.Screen name="Messages" component={Message} options={{headerTitle: MessageHeader}}/>
         <Stack.Screen name="ChatRoom" component={ChatRoom} options={{headerTitle: ChatRoomHeader}}/>
+        <Stack.Screen name="demo" component={demo} options={{headerTitle: ChatRoomHeader}}/>
       </Stack.Navigator>
     );
   };
@@ -79,7 +82,7 @@ const BottomTabNavigator = () => {
                             tabBarActiveTintColor: '#ad40af'
                             
                         })}>
-        <Tab.Screen name="Home" component={Home} />
+        <Tab.Screen name="Home" component={Home}/>
         <Tab.Screen name="Friend" component={Friend} />
         <Tab.Screen name="Message" component={MessageStack} 
         options={{tabBarStyle:{display: 'none'}}} />
