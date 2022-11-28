@@ -1,20 +1,45 @@
-import { useState, useEffect } from "react";
-import { View, Text, FlatList, StyleSheet, Dimensions, TextInput, TouchableOpacity, SafeAreaView } from "react-native";
+import React, { useEffect, useState } from 'react'
+import {StyleSheet, FlatList, SafeAreaView, View, Text,
+    TextInput,
+    Pressable,
+    KeyboardAvoidingView,
+    Platform,
+    Image,
+    Keyboard,} from 'react-native';
+import MessageInput from '../components/messageInput/MessageInput';
+import Message from '../components/messages/Message';
+import chatRoomData from '../dummy/Chats';
+import { useRoute, useNavigation } from '@react-navigation/native';
+import { BASE_URL } from '../loginRegister/config/API';
+import socketIO from "socket.io-client";
+////////////////////////////////////
+import styles from '../components/messageInput/styles';
+import Icon from 'react-native-vector-icons/SimpleLineIcons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import EmojiSelector from 'react-native-emoji-selector';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 
-const { width, height } = Dimensions.get("screen");
-const Chat = ({ route }) => {
-    var full_name = route.params.full_name;
-    var status = route.params.status;
+const ENDPOINT = "http://192.168.1.76:3000";
+const socket = socketIO(ENDPOINT)
+export default function ChatRoom({ route }) {
+
     var users = route.params.users;
     var unique_id = route.params.unique_id;
-    // var date = route.params.date;
-    // var date = "";
-    var [Mess, setMess] = useState("");
+    var username = route.params.username;
     const [ListMess, setListMess] = useState([]);
-    console.log(users);
-    var viewMe = "";
+    const [message, setMessage] = useState('');
+    
+    // console.log(users, unique_id);
+
+    //////////////////////////
+    const [isEmojiPickerOpen, setIsEmojiPickerOpen] = useState(false);
+    const [image, setImage] = useState(null);
+
+
+
     post = () => {
-        const URL = "http://192.168.201.1:8080/users/api/messages.php"
+        const URL = BASE_URL + "messages.php"
         var Data = {
             incoming_msg_id: users,
             outgoing_msg_id: unique_id
@@ -31,7 +56,6 @@ const Chat = ({ route }) => {
             .then((res) => res.json())
             .then((res) => {
                 setListMess(res.data)
-
             }
             )
             .catch((error) => {
@@ -40,99 +64,183 @@ const Chat = ({ route }) => {
     };
 
     useEffect(() => {
+        socket.on('receiver', () => {
+          post()
+        })
         post()
-        return () => {
-
-        };
     }, [])
 
-    sendMessages = () => {
-        const URL = "http://192.168.201.1:8080/users/api/createRoom.php"
-        var Data = {
-            incoming_msg_id: users,
-            outgoing_msg_id: unique_id,
-            msg: Mess,
-            // date: date
-        }
-        const headers = {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        };
-        fetch(URL, {
-            method: 'POST',
-            headers: headers,
-            body: JSON.stringify(Data)
-        })
-            .then((res) => res.json())
-            .catch((error) => {
-                console.log('Error: ', error)
-            })
 
+    ////////////////////////////////////////////////////
+    // MessageInput
+    // camera
+  const openCamera = () => {
+    const options = {
+      storageOptions: {
+        path: 'images',
+        mediaType: 'photo',
+      },
+      includeBase64: true,
     };
+    launchCamera(options, response => {
+      console.log('response', response);
+    });
+  };
 
-    const ItemList = ({ item }) => {
-        var msg = item.msg;
-        var date = item.date;
-        var outgoing_msg_id = item.outgoing_msg_id;
-        if (outgoing_msg_id == users) {
-            viewMe = styles.viewOutGoing;
-        } else {
-            viewMe = styles.viewIncoming;
-        }
+  // choosePhoto
+  const handleChoosePhoto = () => {
+    const options = {
+      mediaType: 'photo',
+      quality: 1,
+    };
+    launchImageLibrary(options, response => {
+      console.log('response', response);
+    });
+  };
 
-        return (
-            <View>
-                <View style={[viewMe, { marginTop: 10 }]}>
-                    <Text>{`${msg}`}</Text>
-                    <Text>{`${date}`}</Text>
-                </View>
-            </View>
-        )
+  const sendMessage = () => {
+    const URL = BASE_URL + "createRoom.php"
+    var Data = {
+        incoming_msg_id: users,
+        outgoing_msg_id: unique_id,
+        msg: message
     }
+    const headers = {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+    };
+    fetch(URL, {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify(Data)
+    })
+        .then((res) => res.json())
+        .catch((error) => {
+            console.log('Error: ', error)
+        })
 
-    return (
-        //header
-        <SafeAreaView>
-            <FlatList
-                style={styles.viewFl}
-                data={ListMess}
-                renderItem={ItemList}
-                keyExtractor={item => `key-${item.room_id}`}
-            />
+    // console.warn(message);
+    setMessage('');
+    Keyboard.dismiss();
+    setIsEmojiPickerOpen(false);
+  };
 
-            <TextInput
-                onChangeText={setMess}
-                value={Mess}
-                placeholder="write something"
-            />
-            <TouchableOpacity onPress={() => {
-                sendMessages()
-            }}>
-                <Text>Send</Text>
-            </TouchableOpacity>
-        </SafeAreaView>
+  const onPlusClicked = () => {
+    console.warn('No message');
+  };
+  
+  const onPress = () => {
+    if (message) {
+      socket.emit('chat-message')
+      sendMessage();
+    } else {
+      onPlusClicked();
+    }
+  };
 
-    )
+////////////////////////////////////////////////////////////////
+  const Message = ( {item} ) => {
+    var msg = item.msg;
+    var date = item.date;
+    // console.log(users);
+
+    var outgoing_msg_id = item.outgoing_msg_id;
+    const isMe = outgoing_msg_id !== users;
+
+  return (
+    <View style={[styles.container, isMe ? styles.rightContainer : styles.leftContainer]}>
+      <Text style={{ color: isMe ? 'white' : 'black', fontSize: 16}}>{`${msg}`}</Text>
+      <Text style={{fontWeight: "300", fontSize: 12, marginTop: 2}}>{`${date}`}</Text>
+    </View>
+  )
 }
 
-const styles = StyleSheet.create({
-    container: {
-        width: width,
-        height: height
-    },
 
-    viewFl: {
-        height: 500
-    },
 
-    viewIncoming: {
-        marginLeft: 50
-    },
+    /////////////
+    // const route = useRoute();
+    const navigation = useNavigation();
 
-    viewOutGoing: {
-        alignItems: "flex-end",
-        backgroundColor: "#FFF",
-        marginRight: 0
-    }
-})
-export default Chat;
+    // console.warn(route.params?.id);
+    navigation.setOptions({title: username})
+
+    return(
+        <SafeAreaView style={[styles.page, style={flex: 1}]}>
+
+            <FlatList
+            data={ListMess}
+            renderItem={Message} 
+            keyExtractor={item => `key-${item.room_id}`}
+            inverted
+            />
+
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={[styles.root, {height: isEmojiPickerOpen ? '60%' : 'auto'}]}
+      keyboardVerticalOffset={100}>
+
+      {image && (
+        <Image source={{uri: image}} style={{width: 100, height: 100}}/>
+      )}
+
+      <View style={styles.row}>
+        <View style={styles.inputContainer}>
+          <Pressable
+            onPress={() => [setIsEmojiPickerOpen(currentValue => !currentValue), Keyboard.dismiss()]}>
+            <Icon
+              name="emotsmile"
+              size={24}
+              color="grey"
+              style={styles.iconEmoji}
+            />
+          </Pressable>
+
+          <TextInput
+            style={styles.input}
+            value={message}
+            onChangeText={setMessage}
+            placeholder="Signal message..."
+          />
+          <Pressable onPress={handleChoosePhoto}>
+            <Ionicons name="image-outline" size={24} color="grey" />
+          </Pressable>
+          <Pressable onPress={openCamera}>
+          <Icon name="camera" size={24} color="grey" style={styles.iconEmoji} />
+         </Pressable>
+          <Icon
+            name="microphone"
+            size={24}
+            color="grey"
+            style={styles.iconMicro}
+          />
+        </View>
+
+        <Pressable onPress={onPress} style={styles.buttonContainer}>
+          {message ? (
+            <Ionicons name="send-sharp" size={18} color="#fff" />
+          ) : (
+            <AntDesign name="plus" size={24} color="#fff" />
+          )}
+        </Pressable>
+      </View>
+
+      {isEmojiPickerOpen && (
+        <EmojiSelector
+          onEmojiSelected={emoji =>
+            setMessage(currentMessage => currentMessage + emoji)
+          }
+          columns={8}
+          showSearchBar={false}
+        />
+      )}
+    </KeyboardAvoidingView>
+        </SafeAreaView>
+    )
+};
+
+// const styles = StyleSheet.create({
+//     page: {
+//         backgroundColor: '#fff',
+//         flex: 1,
+//     }
+// });

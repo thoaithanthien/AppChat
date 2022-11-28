@@ -3498,6 +3498,14 @@
   "resolved" "https://registry.npmjs.org/follow-redirects/-/follow-redirects-1.15.2.tgz"
   "version" "1.15.2"
 
+"follow-redirects@0.0.7":
+  "integrity" "sha512-RxpX808lAA4IZ2cNqzRedcsPfVuo2AJEL8mmGvGeN0KGLJWZf5fidmUkcB0DWUCrmLD+GAQ0J2WOBORw8BS/Uw=="
+  "resolved" "https://registry.npmjs.org/follow-redirects/-/follow-redirects-0.0.7.tgz"
+  "version" "0.0.7"
+  dependencies:
+    "debug" "^2.2.0"
+    "stream-consume" "^0.1.0"
+
 "for-in@^1.0.2":
   "integrity" "sha512-7EwmXrOjyL+ChxMhmG5lnW9MPt1aIeZEwKhQzoBUdTV0N3zuwWDZYVJatDvZ2OyzPUvdIAZDsCetk3coyMfcnQ=="
   "resolved" "https://registry.npmjs.org/for-in/-/for-in-1.0.2.tgz"
@@ -6160,6 +6168,13 @@
   "resolved" "https://registry.npmjs.org/react-is/-/react-is-17.0.2.tgz"
   "version" "17.0.2"
 
+"react-native-axios@^0.17.1":
+  "integrity" "sha512-HQO5RB6+SYMYX6ckXPkzGtIC2H7LVdRrXhB6IVrUNj+QpJH9rWVDeKM51juvvhPBQtXJjB1vORWPrQhvnYOvMA=="
+  "resolved" "https://registry.npmjs.org/react-native-axios/-/react-native-axios-0.17.1.tgz"
+  "version" "0.17.1"
+  dependencies:
+    "follow-redirects" "0.0.7"
+
 "react-native-codegen@^0.70.4":
   "integrity" "sha512-bPyd5jm840omfx24VRyMP+KPzAefpRDwE18w5ywMWHCWZBSqLn1qI9WgBPnavlIrjTEuzxznWQNcaA26lw8AMQ=="
   "resolved" "https://registry.npmjs.org/react-native-codegen/-/react-native-codegen-0.70.4.tgz"
@@ -6241,11 +6256,6 @@
   dependencies:
     "react-freeze" "^1.0.0"
     "warn-once" "^0.1.0"
-
-"react-native-socketio@^0.3.0":
-  "integrity" "sha512-N7esrV9jHD/qoFffnX98mux0G+UZ5UTf9Kw529ZFIlwsF5de6YWNLU0PhGhagTAkFUYEGzUQGBNDZ5LxjOAG7g=="
-  "resolved" "https://registry.npmjs.org/react-native-socketio/-/react-native-socketio-0.3.0.tgz"
-  "version" "0.3.0"
 
 "react-native-vector-icons@^9.2.0":
   "integrity" "sha512-wKYLaFuQST/chH3AJRjmOLoLy3JEs1JR6zMNgTaemFpNoXs0ztRnTxcxFD9xhX7cJe1/zoN5BpQYe7kL0m5yyA=="
@@ -6990,6 +7000,11 @@
   "integrity" "sha512-RwNA9Z/7PrK06rYLIzFMlaF+l73iwpzsqRIFgbMLbTcLD6cOao82TaWefPXQvB2fOC4AjuYSEndS7N/mTCbkdQ=="
   "resolved" "https://registry.npmjs.org/statuses/-/statuses-2.0.1.tgz"
   "version" "2.0.1"
+
+"stream-consume@^0.1.0":
+  "integrity" "sha512-tNa3hzgkjEP7XbCkbRXe1jpg+ievoa0O4SCFlMOYEscGSS4JJsckGL8swUyAa/ApGU3Ae4t6Honor4HhL+tRyg=="
+  "resolved" "https://registry.npmjs.org/stream-consume/-/stream-consume-0.1.1.tgz"
+  "version" "0.1.1"
 
 "strict-uri-encode@^2.0.0":
   "integrity" "sha512-QwiXZgpRcKkhTj2Scnn++4PKtWsH0kpzZ62L2R6c/LUVYv7hVnZqcg2+sMuT6R7Jusu1vviK/MFsu6kNJfWlEQ=="

@@ -5,7 +5,7 @@ import { BASE_URL } from '../loginRegister/config/API';
 import socketIO from "socket.io-client";
 
 const {width, height} = Dimensions.get("window");
-const ENDPOINT = "http://192.168.1.3:3000";
+const ENDPOINT = "http://192.168.1.76:3000";
 const socket = socketIO(ENDPOINT)
 
 const SettingScreen = ({navigation}) => {
@@ -166,7 +166,7 @@ const SettingScreen = ({navigation}) => {
                 </View>
                 <TouchableOpacity onPress={() => { 
                     logout();
-                    navigation.replace("Login");
+                    navigation.navigate("Login");
                     socket.emit("logout");
                     
                 }} style={{justifyContent: "center", alignItems: "center", flexDirection: "row"}}>

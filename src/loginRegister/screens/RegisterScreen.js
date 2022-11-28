@@ -12,17 +12,7 @@ import React, { useState } from 'react';
 import  MaterialIcons  from 'react-native-vector-icons/MaterialIcons'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { registerAPI } from '../config/API';
-import {launchImageLibrary} from 'react-native-image-picker';
 
-const options = {
-    title: 'Select Image',
-    type: 'library',
-    options: {
-      selectionLimit: 1,
-      mediaType: 'photo',
-    //   includeBase64: true,
-    }
-}
 const Register = ({navigation}) => {
 
     
@@ -30,13 +20,7 @@ const Register = ({navigation}) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [CFpassword, setCFpassword] = useState('');
-    const [img, setImg] = useState('');
     
-    const openGallery = async () => {
-        const images = await launchImageLibrary(options);
-        setImg(images.assets[0]);
-        console.log(images);
-    }
 
     const insert = () => {
 
@@ -46,13 +30,12 @@ const Register = ({navigation}) => {
             alert("Mật khẩu không giống nhau")
         }
 
-        else { registerAPI(userName, email, password, img, navigation) }
+        else { registerAPI(userName, email, password, navigation) }
 
-        // setUserName('');
-        // setEmail('');
-        // setPassword('');
-        // setCFpassword('');
-        // setImg('');
+        setUserName('');
+        setEmail('');
+        setPassword('');
+        setCFpassword('');
         Keyboard.dismiss();
     }
   return (
@@ -103,19 +86,6 @@ const Register = ({navigation}) => {
                 value={CFpassword}
                 style={styles.textInput}
                 secureTextEntry={true}/>
-            </View>
-
-            <View style={styles.input}>
-                <Ionicons name='camera-outline' size={20} color='#666' 
-                style={styles.icon}/> 
-                <Button onPress={openGallery}
-                title='Choose image'
-                style={styles.textInput}
-                />
-
-                <Image style={styles.image}
-                source={img}/>
-                
             </View>
 
             <TouchableOpacity onPress={() => { insert() }} style={styles.btnLogin}>

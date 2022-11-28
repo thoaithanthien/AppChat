@@ -1,8 +1,8 @@
-export const registerAPI = (userName, Email, Password, Image) => {
+export const registerAPI = (userName, Email, Password) => {
     var username = userName;
     var email = Email;
     var pass = Password;
-    var img = Image;
+    // var img = Image;
 
     var InsertAPI = "http://192.168.201.1:8080/users/api/register.php"
     var headers = {
@@ -14,7 +14,7 @@ export const registerAPI = (userName, Email, Password, Image) => {
         username: username,
         email: email,
         password: pass,
-        img: img
+        // img: img
     };
 
     fetch(InsertAPI,
@@ -31,10 +31,11 @@ export const registerAPI = (userName, Email, Password, Image) => {
         })
         .catch((error) => {
             if (error = "Email has already existed!") {
-                alert("Email đã tồn tại! Vui lòng chọn Email khác!")
+                alert("Email đã tồn tại hoặc không hợp lệ! Vui lòng nhập Email khác!")
             } else (
                 alert("Error: " + error))
         })
 }
 
 export const BASE_URL = "http://192.168.201.1:8080/users/api/";
+export const URL = "http://192.168.201.1:8080/users/image.php";

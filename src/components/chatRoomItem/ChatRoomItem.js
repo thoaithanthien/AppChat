@@ -12,13 +12,12 @@ export default function ChatRoomItem({ chatRoom }) {
   var date = chatRoom.date;
   var status = chatRoom.status;
   var isActive = (status == "Active now") ? styles.isOnline : styles.isOffline;
-  // console.log(status);
-  // var user_id = ""; :)
+  var user_id = '';
+  // console.log(user_id);
 
   const navigation = useNavigation();
-  // const user = chatRoom.users[1];
   const onPress = () => {
-    navigation.navigate('demo', 
+    navigation.navigate('ChatRoom', 
     { unique_id: unique_id,
       username: username,
       msg: msg,
@@ -32,7 +31,7 @@ export default function ChatRoomItem({ chatRoom }) {
 
     <Pressable onPress={onPress} style={styles.container}>
         <Image  style={styles.image} 
-        source={{ uri: 'https://i.pinimg.com/736x/99/8b/76/998b76aa2e21e43e25970bb72bfeda98.jpg'}}/>
+        source={{ uri: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png'}}/>
 
         {/* {chatRoom.newMessages && <View style={styles.badgeContainer}>
           <Text style={styles.badgeText}>{`${unique_id}`}</Text>

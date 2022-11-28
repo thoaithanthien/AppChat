@@ -69,7 +69,7 @@ const Friend = () => {
         <TouchableOpacity style={styles.btnAccept} onPress={() => {
               navigation.goBack();
         }}>
-            <Button title="Accept" size={30} style={styles.iconAccept}/>
+            <Button title="Add" size={30} style={styles.iconAccept}/>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.btnDelete} onPress={() => {

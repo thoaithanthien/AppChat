@@ -1,21 +1,59 @@
-import {StyleSheet, SafeAreaView, FlatList, View, Text, TouchableOpacity, Image} from 'react-native';
+import {StyleSheet, SafeAreaView, FlatList, View, Text, TouchableOpacity, Image, TextInput, Pressable} from 'react-native';
 import React, { useState, useEffect } from 'react';
 import ChatRoomItem from '../components/chatRoomItem';
 import IsActive from '../components/active/IsActive';
 import chatRoomsData from '../dummy/ChatRoomData';
-import {BASE_URL} from '../loginRegister/config/API';
+import {BASE_URL, URL} from '../loginRegister/config/API';
 import socketIO from "socket.io-client";
+import axios from 'axios';
 import Icon from "react-native-vector-icons/Ionicons";
+import {launchImageLibrary} from 'react-native-image-picker';
+import { updateImg } from '../loginRegister/config/updateImg';  
+
+const options = {
+    selectionLimit: 1,
+    mediaType: 'photo',
+    includeBase64: true,
+  };
 
 
-
-const ENDPOINT = "http://192.168.1.5:3000";
+const ENDPOINT = "http://192.168.1.76:3000";
 const socket = socketIO(ENDPOINT)
 const Messager = ( {navigation} ) => {
   var user_id = "";
+  // var unique_id = "";
 
   const [dataList, setDataList] = useState([]);
   const [dataUser, setDataUser] = useState([]);
+  var [image, setImage] = useState([]);
+
+  var openGallery = async () => {
+    const images = await launchImageLibrary(options);
+    setImage(images.assets[0]);
+    // console.log(images);   
+    // let res = await
+    var data = {
+      unique_id: user_id,
+      img : images.assets[0].base64
+      // img: img
+  };  
+    fetch(URL, {
+      method: 'PUT', // or 'PUT'
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data)
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        if(response == "U")
+        log("success");
+    })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  }
 
   // render data list users
   useEffect (()=> {
@@ -32,12 +70,61 @@ const Messager = ( {navigation} ) => {
     });
 
     getList();
-  }, [dataList]);
+  }, []);
 
   useEffect(() => {
+    // socket.on('login-success', () => {
+    //   getUser();
+    // });
     getUser();
     
   }, []);
+
+  // list
+  const ItemList = ({item}) => {
+    var unique_id = item.unique_id;
+    // console.log(unique_id);
+    var username = item.username;
+    var msg = item.msg;
+    var date = item.date;
+    var status = item.status;
+    var img = item.img;
+    var isActive = (status == "Active now") ? styles.isOnline : styles.isOffline;
+    const onPress = () => {
+      navigation.navigate('ChatRoom', 
+      { unique_id: unique_id,
+        username: username,
+        msg: msg,
+        date: date,
+        status: status,
+        users: user_id
+      })
+    }
+  
+      return (
+      <Pressable onPress={onPress} style={styles.container}>
+          <Image  style={styles.image} 
+                  source={img == "" ? {uri: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png'} : {uri: 'http://192.168.201.1:8080/users/' + img}}/>
+
+  
+          {/* {chatRoom.newMessages && <View style={styles.badgeContainer}>
+            <Text style={styles.badgeText}>{`${unique_id}`}</Text>
+          </View>} */}
+  
+          <View style={styles.rightContainer}>
+            <View style={styles.rowList}>
+              <Text style={styles.name}>{`${username}`}</Text>
+              <Text numberOfLines={1} style={[styles.text, isActive]}>{`${status}`}</Text>
+              
+            </View>
+            <View style={styles.rowList}>
+              <Text numberOfLines={1} style={styles.text}>{`${msg}`}</Text>
+              <Text numberOfLines={1} style={styles.text}>{`${date}`}</Text>
+              </View>
+          </View>
+      </Pressable>
+    );
+};
 
   getList = () => {
         const URL = BASE_URL + "homeChat.php"
@@ -63,13 +150,17 @@ const Messager = ( {navigation} ) => {
 
 // User
   const ItemUser = ({item}) => {
-    var user_id = item.unique_id;
+    user_id = item.unique_id;
     var email = item.email;
+    var img =  item.img;
+    console.log(img);
     return (
     <TouchableOpacity onPress={() => {}} style={styles.container}>
       <View style={styles.rowMain}>
-        <Image  style={styles.image} 
-        source={{ uri: 'https://i.pinimg.com/736x/99/8b/76/998b76aa2e21e43e25970bb72bfeda98.jpg'}}/>
+        <Pressable onPress={openGallery}>
+        <Image style={styles.image} 
+        source={img == "" ? {uri: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png'} : {uri: 'http://192.168.201.1:8080/users/' + img}}/>
+        </Pressable>
 
         <View style={styles.rightContainer}>
           <View style={styles.row}>
@@ -77,12 +168,12 @@ const Messager = ( {navigation} ) => {
             <Text style={styles.name}>{`${user_id}`}</Text>
           </View>
             <Text numberOfLines={1} style={styles.text}>{`${email}`}</Text>
-            <Text numberOfLines={1} style={[styles.text, styles.isOnline]}>Active Now</Text>
+            <Text numberOfLines={1} style={[styles.text, styles.ActiveNow]}>Active Now</Text>
         </View>
         <TouchableOpacity onPress={() => {
-              navigation.goBack();
+              navigation.navigate('Setting');
         }}>
-            <Icon name="arrow-back" size={30} style={styles.icon}/>
+            <Icon name="arrow-forward" size={30} style={styles.icon}/>
         </TouchableOpacity>
 
       </View>
@@ -100,19 +191,27 @@ const Messager = ( {navigation} ) => {
                     renderItem={ItemUser}
                     keyExtractor={item => `key-${item.unique_id}`}/>
             </TouchableOpacity>
+            {/* <TextInput style={styles.search}
+            value={search}
+            placeholder='Search Here ....'
+            onChangeText={(text) => searchFilter(text)}
+            /> */}
       
         <FlatList
         data={dataList}
-        renderItem={( {item} ) => <ChatRoomItem chatRoom={item}/>}
+        renderItem={ItemList}
         keyExtractor={item => `key-${item.unique_id}`}
         showsVerticalScrollIndicator={false}
         ListHeaderComponent={() => <FlatList
-          data={chatRoomsData}
+          data={dataList}
           renderItem={( {item} ) => <IsActive chatRoom={item}/>}
+          keyExtractor={item => `key-${item.unique_id}`}
           showsHorizontalScrollIndicator={false}
           horizontal/>}/>
     </SafeAreaView>
   );
+
+  console.log(user_id);
 };
 
 const styles = StyleSheet.create({
@@ -143,8 +242,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
 
-  isOnline: {
-    color: '#16D0FE'
+  rowList: {  
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   },
 
   name: {
@@ -158,7 +258,38 @@ const styles = StyleSheet.create({
 
   icon: {
     marginRight: 8
+  },
+
+  // status
+  isOnline: {
+    backgroundColor: '#16D0FE',
+      width: 18,
+      height: 18,
+      borderWidth: 1,
+      borderColor: '#fff',
+      borderRadius: 10,
+      position: 'absolute',
+      right: 20,
+      bottom: 5
+  },
+
+  isOffline: {
+    backgroundColor: '#ccc',
+      width: 18,
+      height: 18,
+      borderWidth: 1,
+      borderColor: '#fff',
+      borderRadius: 10,
+      position: 'absolute',
+      right: 20,
+      bottom: 5
+      // top: 10,
+  },
+
+  ActiveNow: {
+    color: '16D0FE'
   }
+
 });
 
 export default Messager;

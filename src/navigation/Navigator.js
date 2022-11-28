@@ -15,7 +15,7 @@ import EditProfile from '../components/setting/EditProfile'
 ////////////////////////
 import LoginScreen from '../loginRegister/screens/LoginScreen';
 import RegisterScreen from '../loginRegister/screens/RegisterScreen';
-import demo from '../screens/demo';
+import ForgotPassword from '../loginRegister/screens/ForgotPassword';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -27,7 +27,6 @@ const Stack = createNativeStackNavigator();
         {/* <Stack.Screen name="Home" component={Home}/> */}
         <Stack.Screen name="Messages" component={Message} options={{headerTitle: MessageHeader}}/>
         <Stack.Screen name="ChatRoom" component={ChatRoom} options={{headerTitle: ChatRoomHeader}}/>
-        <Stack.Screen name="demo" component={demo} options={{headerTitle: ChatRoomHeader}}/>
       </Stack.Navigator>
     );
   };
@@ -47,7 +46,10 @@ const Stack = createNativeStackNavigator();
         <Stack.Navigator screenOptions={{headerShown: false}}>
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Register" component={RegisterScreen}/>
-        <Stack.Screen name="Bottom" component={BottomTabNavigator} />
+        <Stack.Screen name="Forgot" component={ForgotPassword}/>
+        <Stack.Screen name="MessageStack" component={MessageStack}/>
+        <Stack.Screen name="Setting" component={SettingScreen} />
+        {/* <Stack.Screen name="Bottom" component={BottomTabNavigator} /> */}
     </Stack.Navigator>
     )
   }
@@ -83,7 +85,7 @@ const BottomTabNavigator = () => {
                             
                         })}>
         <Tab.Screen name="Home" component={Home}/>
-        <Tab.Screen name="Friend" component={Friend} />
+        {/* <Tab.Screen name="Friend" component={Friend} /> */}
         <Tab.Screen name="Message" component={MessageStack} 
         options={{tabBarStyle:{display: 'none'}}} />
         <Tab.Screen name="Setting" component={SettingScreen}
@@ -99,16 +101,16 @@ const MessageHeader = (props) => {
     return (
         <View style={{
             flexDirection: 'row',
-            justifyContent: 'space-between',
+            justifyContent: 'center',
             width,
             padding: 10,
             alignItems: 'center'}}>
-            <Image 
+            {/* <Image 
                 source={{ uri: 'https://i.pinimg.com/736x/99/8b/76/998b76aa2e21e43e25970bb72bfeda98.jpg'}}
-                style={{width: 30, height: 30, borderRadius: 30}}/>
+                style={{width: 30, height: 30, borderRadius: 30}}/> */}
             <Text style={{flex: 1, textAlign: 'center', fontWeight: 'bold'}}>Message</Text>
-            <Ionicons name="camera-outline" size={24} color="black" style={{marginRight: 10}}/>
-            <AntDesign name="edit" size={24} color="black" style={{marginRight: 20}}/>         
+            <Ionicons name="camera-outline" size={24} color="black" style={{marginRight: 15}}/>
+            <AntDesign name="edit" size={24} color="black" style={{marginRight: 84}}/>         
         </View>
     )
 }
@@ -127,7 +129,7 @@ const ChatRoomHeader = (props) => {
                 source={{ uri: 'https://i.pinimg.com/736x/99/8b/76/998b76aa2e21e43e25970bb72bfeda98.jpg'}}
                 style={{width: 30, height: 30, borderRadius: 30}}/>
             <Text style={{flex: 1, fontWeight: 'bold', marginLeft: 10}}>{props.children}</Text>
-            <Ionicons name="camera-outline" size={24} color="black" style={{marginRight: 10}}/>
+            <Ionicons name="md-videocam-outline" size={26} color="black" style={{marginRight: 10}}/>
             <AntDesign name="edit" size={24} color="black" style={{marginRight: 20}}/>         
         </View>
     )
