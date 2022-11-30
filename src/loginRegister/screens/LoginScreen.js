@@ -15,7 +15,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {BASE_URL} from '../config/API';
 import socketIO from 'socket.io-client';
 
-const ENDPOINT = "http://192.168.1.76:3000";
+const ENDPOINT = "http://192.168.1.4:3000";
 const socket = socketIO(ENDPOINT)
 
 const Login = ({navigation}) => {

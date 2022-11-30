@@ -11,11 +11,12 @@ import Message from '../screens/Messagers';
 import Friend from '../screens/Friend';
 import ChatRoom from '../screens/ChatRoom';
 import ChangePass from '../components/setting/ChangePass';
-import EditProfile from '../components/setting/EditProfile'
+import SetQuestion from '../components/setting/SetQuestion'
 ////////////////////////
 import LoginScreen from '../loginRegister/screens/LoginScreen';
 import RegisterScreen from '../loginRegister/screens/RegisterScreen';
 import ForgotPassword from '../loginRegister/screens/ForgotPassword';
+import SecurityQuestion from '../loginRegister/screens/SecurityQuestion';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -35,7 +36,7 @@ const Stack = createNativeStackNavigator();
     return (
         <Stack.Navigator screenOptions={{headerShown: false}}>
         <Stack.Screen name="Settings" component={Setting}/>
-        <Stack.Screen name="EditProfile" component={EditProfile}/>
+        <Stack.Screen name="SetQuestion" component={SetQuestion}/>
         <Stack.Screen name="ChangePass" component={ChangePass}/>
     </Stack.Navigator>
     );
@@ -49,6 +50,7 @@ const Stack = createNativeStackNavigator();
         <Stack.Screen name="Forgot" component={ForgotPassword}/>
         <Stack.Screen name="MessageStack" component={MessageStack}/>
         <Stack.Screen name="Setting" component={SettingScreen} />
+        <Stack.Screen name="Security" component={SecurityQuestion} />
         {/* <Stack.Screen name="Bottom" component={BottomTabNavigator} /> */}
     </Stack.Navigator>
     )

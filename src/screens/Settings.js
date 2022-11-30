@@ -5,7 +5,7 @@ import { BASE_URL } from '../loginRegister/config/API';
 import socketIO from "socket.io-client";
 
 const {width, height} = Dimensions.get("window");
-const ENDPOINT = "http://192.168.1.76:3000";
+const ENDPOINT = "http://192.168.1.4:3000";
 const socket = socketIO(ENDPOINT)
 
 const SettingScreen = ({navigation}) => {
@@ -99,9 +99,9 @@ const SettingScreen = ({navigation}) => {
                 <View style={styles.containerDefault}>
                     <TouchableOpacity style={styles.touchableContainer} 
                     onPress={() => {
-                    navigation.navigate('EditProfile')
+                    navigation.navigate('SetQuestion')
                     }}>
-                        <Text style={styles.title3}>Edit Profile</Text>
+                        <Text style={styles.title3}>SetQuestion</Text>
                         <Icon name="chevron-forward-outline" size={20} style= {iconColor}></Icon>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.touchableContainer} 

@@ -19,6 +19,10 @@ io.on("connection", (socket) => {
     socket.on("logout", () => {
         io.emit("logout-success", () => {})
     });
+
+    socket.on("uploadProfile", () => {
+        io.emit("profile-success", () => {})
+    });
 });
 
 

@@ -17,7 +17,7 @@ const options = {
   };
 
 
-const ENDPOINT = "http://192.168.1.76:3000";
+const ENDPOINT = "http://192.168.1.4:3000";
 const socket = socketIO(ENDPOINT)
 const Messager = ( {navigation} ) => {
   var user_id = "";
@@ -25,11 +25,11 @@ const Messager = ( {navigation} ) => {
 
   const [dataList, setDataList] = useState([]);
   const [dataUser, setDataUser] = useState([]);
-  var [image, setImage] = useState([]);
+  // var [image, setImage] = useState([]);
 
   var openGallery = async () => {
     const images = await launchImageLibrary(options);
-    setImage(images.assets[0]);
+    // setImage(images.assets[0]);
     // console.log(images);   
     // let res = await
     var data = {
@@ -48,7 +48,8 @@ const Messager = ( {navigation} ) => {
       .then((response) => response.json())
       .then((response) => {
         if(response == "U")
-        log("success");
+        socket.emit('uploadProfile');
+        // log("success");
     })
       .catch((error) => {
         console.error('Error:', error);
@@ -73,12 +74,12 @@ const Messager = ( {navigation} ) => {
   }, []);
 
   useEffect(() => {
-    // socket.on('login-success', () => {
-    //   getUser();
-    // });
+    socket.on('profile-success', () => {
+      getUser();
+    });
     getUser();
     
-  }, []);
+  }, [dataUser]);
 
   // list
   const ItemList = ({item}) => {
@@ -153,7 +154,7 @@ const Messager = ( {navigation} ) => {
     user_id = item.unique_id;
     var email = item.email;
     var img =  item.img;
-    console.log(img);
+    // console.log(img);
     return (
     <TouchableOpacity onPress={() => {}} style={styles.container}>
       <View style={styles.rowMain}>

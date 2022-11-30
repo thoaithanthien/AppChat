@@ -20,7 +20,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import EmojiSelector from 'react-native-emoji-selector';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 
-const ENDPOINT = "http://192.168.1.76:3000";
+const ENDPOINT = "http://192.168.1.4:3000";
 const socket = socketIO(ENDPOINT)
 export default function ChatRoom({ route }) {
 

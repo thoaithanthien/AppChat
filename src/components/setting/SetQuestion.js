@@ -10,17 +10,17 @@ import { StyleSheet,
     TouchableWithoutFeedback } from 'react-native'
     import React, { useState } from 'react';
     import  MaterialIcons  from 'react-native-vector-icons/MaterialIcons'
-    import Ionicons from 'react-native-vector-icons/Ionicons'
+    import ArtDesign from 'react-native-vector-icons/AntDesign'
     import { registerAPI } from '../config/APIReset';    
 
-    const Register = ({navigation}) => {
+    const SetQuestion = ({navigation}) => {
         
         const [email, setEmail] = useState('');
         const [password, setPassword] = useState('');
         const [CFpassword, setCFpassword] = useState('');
     
         const insert = () => {
-            navigation.navigate('Security');
+    
             // if (password.length == 0 || email.length == 0 || CFpassword.length == 0) {
             //     alert("Vui lòng nhập đầy đủ thông tin")
             // } else if (password !== CFpassword) {
@@ -38,60 +38,53 @@ import { StyleSheet,
         <SafeAreaView style={styles.container}>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View style={{paddingHorizontal: 25}}>
-                <View style={{alignItems: 'center'}}>
+                {/* <View style={{alignItems: 'center'}}>
                     <Image style={styles.img} source={require('../../assets/img/authentication.png')}/>
-                </View>
-                <Text style={styles.text}>Forgot Password</Text>
+                </View> */}
+                <Text style={styles.text}>Question Security</Text>
                 
                 {/* Forgot */}
+                <View style={styles.question}>       
+                    <Text style={styles.textQuestion}>Ask your question and answer</Text>
+                </View>
     
                 <View style={styles.input}>
-                    <MaterialIcons name='alternate-email' size={20} color='#666' 
-                    style={styles.icon}/> 
-                    <TextInput placeholder='Email ID' 
+                <ArtDesign name='questioncircle' size={20} color='#666' 
+                    style={styles.icon}/>
+                    <TextInput placeholder='Question' 
                     keyboardType='email-address' 
                     onChangeText={setEmail}
                     value={email}
                     style={styles.textInput}/>
                 </View>
     
-                {/* <View style={styles.input}>
-                    <Ionicons name='lock-closed-outline' size={20} color='#666' 
-                    style={styles.icon}/> 
-                    <TextInput placeholder='Password'
+                <View style={styles.input}>
+                <MaterialIcons name='question-answer' size={20} color='#666' 
+                    style={styles.icon}/>
+                    <TextInput placeholder='Answer'
                     onChangeText={setPassword}
                     value={password}
                     style={styles.textInput}
                     secureTextEntry={true}/>
                 </View>
     
-                <View style={styles.input}>
-                    <Ionicons name='lock-closed-outline' size={20} color='#666' 
-                    style={styles.icon}/> 
-                    <TextInput placeholder='Confirm password'
-                    onChangeText={setCFpassword}
-                    value={CFpassword}
-                    style={styles.textInput}
-                    secureTextEntry={true}/>
-                </View> */}
-    
                 <TouchableOpacity onPress={() => { insert() }} style={styles.btnLogin}>
                         <Text style={styles.textLogin}>Confirm</Text>
                 </TouchableOpacity>
     
                 <View style={styles.connectRegister}>
-                    <Text>Already registered?</Text>
-                    <TouchableOpacity onPress={() => { navigation.navigate('Login')}}>
-                        <Text style={styles.textConnectRegister}> Login</Text>
+                    <Text>Are you?</Text>
+                    <TouchableOpacity onPress={() => { navigation.navigate('Setting')}}>
+                        <Text style={styles.textConnectRegister}> Back</Text>
                     </TouchableOpacity>
                 </View>
 
-                <View style={styles.connectRegister}>
+                {/* <View style={styles.connectRegister}>
                     <Text>Already registered?</Text>
                     <TouchableOpacity onPress={() => { navigation.navigate('Register')}}>
                         <Text style={styles.textConnectRegister}> Register</Text>
                     </TouchableOpacity>
-                </View>
+                </View> */}
     
             </View>
             </TouchableWithoutFeedback>
@@ -124,6 +117,20 @@ import { StyleSheet,
             borderBottomWidth: 1,
             paddingBottom: 8,
             marginBottom: 25
+        },
+
+        question: {
+            alignItems: 'center',
+            borderBottomWidth: 1,
+            borderRadius: 5,
+            paddingBottom: 8,
+            marginBottom: 25
+        },
+
+        textQuestion: {
+            fontSize: 25,
+            fontWeight: '500',
+            marginTop: 5
         },
         
         icon: {
@@ -181,4 +188,4 @@ import { StyleSheet,
     
     });
     
-    export default Register
+    export default SetQuestion;

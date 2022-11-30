@@ -13,49 +13,52 @@ import { StyleSheet,
     import Ionicons from 'react-native-vector-icons/Ionicons'
     import { registerAPI } from '../config/APIReset';    
 
-    const Register = ({navigation}) => {
+    const SecurityQuestion = ({navigation}) => {
         
         const [email, setEmail] = useState('');
         const [password, setPassword] = useState('');
         const [CFpassword, setCFpassword] = useState('');
     
         const insert = () => {
-            navigation.navigate('Security');
-            // if (password.length == 0 || email.length == 0 || CFpassword.length == 0) {
-            //     alert("Vui lòng nhập đầy đủ thông tin")
-            // } else if (password !== CFpassword) {
-            //     alert("Mật khẩu không giống nhau")
-            // }
     
-            // else { registerAPI(email, password, navigation) }
+            if (password.length == 0 || email.length == 0 || CFpassword.length == 0) {
+                alert("Vui lòng nhập đầy đủ thông tin")
+            } else if (password !== CFpassword) {
+                alert("Mật khẩu không giống nhau")
+            }
     
-            // setEmail('');
-            // setPassword('');
-            // setCFpassword('');
-            // Keyboard.dismiss();
+            else { registerAPI(email, password, navigation) }
+    
+            setEmail('');
+            setPassword('');
+            setCFpassword('');
+            Keyboard.dismiss();
         }
       return (
         <SafeAreaView style={styles.container}>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View style={{paddingHorizontal: 25}}>
-                <View style={{alignItems: 'center'}}>
+                {/* <View style={{alignItems: 'center'}}>
                     <Image style={styles.img} source={require('../../assets/img/authentication.png')}/>
-                </View>
-                <Text style={styles.text}>Forgot Password</Text>
+                </View> */}
+                <Text style={styles.text}>Question Security</Text>
                 
                 {/* Forgot */}
+                <View style={styles.question}>       
+                    <Text style={styles.textQuestion}>How does the cat sound?</Text>
+                </View>
     
                 <View style={styles.input}>
-                    <MaterialIcons name='alternate-email' size={20} color='#666' 
+                    <MaterialIcons name='question-answer' size={20} color='#666' 
                     style={styles.icon}/> 
-                    <TextInput placeholder='Email ID' 
+                    <TextInput placeholder='Answer' 
                     keyboardType='email-address' 
                     onChangeText={setEmail}
                     value={email}
                     style={styles.textInput}/>
                 </View>
     
-                {/* <View style={styles.input}>
+                <View style={styles.input}>
                     <Ionicons name='lock-closed-outline' size={20} color='#666' 
                     style={styles.icon}/> 
                     <TextInput placeholder='Password'
@@ -73,7 +76,7 @@ import { StyleSheet,
                     value={CFpassword}
                     style={styles.textInput}
                     secureTextEntry={true}/>
-                </View> */}
+                </View>
     
                 <TouchableOpacity onPress={() => { insert() }} style={styles.btnLogin}>
                         <Text style={styles.textLogin}>Confirm</Text>
@@ -124,6 +127,20 @@ import { StyleSheet,
             borderBottomWidth: 1,
             paddingBottom: 8,
             marginBottom: 25
+        },
+
+        question: {
+            alignItems: 'center',
+            borderWidth: 1,
+            borderRadius: 30,
+            paddingBottom: 8,
+            marginBottom: 25
+        },
+
+        textQuestion: {
+            fontSize: 25,
+            fontWeight: '500',
+            marginTop: 5
         },
         
         icon: {
@@ -181,4 +198,4 @@ import { StyleSheet,
     
     });
     
-    export default Register
+    export default SecurityQuestion;
