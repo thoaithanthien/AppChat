@@ -3,7 +3,7 @@ import { View , Text, Image, Pressable, FlatList } from 'react-native'
 import styles from './styles';
 import { useNavigation } from '@react-navigation/core';
 
-
+var user_id = "";
 export default function IsActive({ chatRoom }) {
     var unique_id = chatRoom.unique_id;
     var username = chatRoom.username;
@@ -11,7 +11,6 @@ export default function IsActive({ chatRoom }) {
     var date = chatRoom.date;
     var status = chatRoom.status;
     var img = chatRoom.img;
-    // var user_id = '';
     var isActive = (status == "Active now") ? styles.isOnline : styles.isOffline;
 
     const [DataUser, setDataUser] = useState([]);
@@ -26,26 +25,26 @@ export default function IsActive({ chatRoom }) {
       status: status,
       users: user_id
     })
-  }
+  };
 
-//   const ItemUser = ({item}) => {
-//     user_id = item.unique_id;
-//   };
+  const ItemUser = ({item}) => {
+    user_id = item.unique_id;
+  };
 
-//   useEffect(() => {
-//     getUser();
-// }, []);
+  useEffect(() => {
+    getUser();
+}, []);
 
-// getUser = () => {
-//   const URL = "http://192.168.201.1:8080/users/api/user.php"
-//   fetch(URL)
-//       .then((res) => res.json())
-//       .then((resJson) => {
-//           setDataUser(resJson.data)
-//       }).catch((error) => {
-//           console.log('Error: ', error)
-//       })
-// };
+getUser = () => {
+  const URL = "http://192.168.201.1:8080/users/api/user.php"
+  fetch(URL)
+      .then((res) => res.json())
+      .then((resJson) => {
+          setDataUser(resJson.data)
+      }).catch((error) => {
+          console.log('Error: ', error)
+      })
+};
 
     return(
       <View>
@@ -57,12 +56,12 @@ export default function IsActive({ chatRoom }) {
               <Text  numberOfLines={1} style={styles.name}>{`${username}`}</Text>
           </View>
         </Pressable>
-        {/* <FlatList
+        <FlatList
                     style={styles.viewUser}
                     data={DataUser}
                     renderItem={ItemUser}
                     keyExtractor={item => `key-${item.unique_id}`}
-                /> */}
+                />
       </View>
     );
 }

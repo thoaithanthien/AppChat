@@ -81,52 +81,6 @@ const Messager = ( {navigation} ) => {
     
   }, [dataUser]);
 
-  // list
-  const ItemList = ({item}) => {
-    var unique_id = item.unique_id;
-    // console.log(unique_id);
-    var username = item.username;
-    var msg = item.msg;
-    var date = item.date;
-    var status = item.status;
-    var img = item.img;
-    var isActive = (status == "Active now") ? styles.isOnline : styles.isOffline;
-    const onPress = () => {
-      navigation.navigate('ChatRoom', 
-      { unique_id: unique_id,
-        username: username,
-        msg: msg,
-        date: date,
-        status: status,
-        users: user_id
-      })
-    }
-  
-      return (
-      <Pressable onPress={onPress} style={styles.container}>
-          <Image  style={styles.image} 
-                  source={img == "" ? {uri: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png'} : {uri: 'http://192.168.201.1:8080/users/' + img}}/>
-
-  
-          {/* {chatRoom.newMessages && <View style={styles.badgeContainer}>
-            <Text style={styles.badgeText}>{`${unique_id}`}</Text>
-          </View>} */}
-  
-          <View style={styles.rightContainer}>
-            <View style={styles.rowList}>
-              <Text style={styles.name}>{`${username}`}</Text>
-              <Text numberOfLines={1} style={[styles.text, isActive]}>{`${status}`}</Text>
-              
-            </View>
-            <View style={styles.rowList}>
-              <Text numberOfLines={1} style={styles.text}>{`${msg}`}</Text>
-              <Text numberOfLines={1} style={styles.text}>{`${date}`}</Text>
-              </View>
-          </View>
-      </Pressable>
-    );
-};
-
   getList = () => {
         const URL = BASE_URL + "homeChat.php"
         fetch(URL)
@@ -169,7 +123,7 @@ const Messager = ( {navigation} ) => {
             <Text style={styles.name}>{`${user_id}`}</Text>
           </View>
             <Text numberOfLines={1} style={styles.text}>{`${email}`}</Text>
-            <Text numberOfLines={1} style={[styles.text, styles.ActiveNow]}>Active Now</Text>
+            <Text numberOfLines={1} style={styles.statusTS}>Active Now</Text>
         </View>
         <TouchableOpacity onPress={() => {
               navigation.navigate('Setting');
@@ -200,7 +154,7 @@ const Messager = ( {navigation} ) => {
       
         <FlatList
         data={dataList}
-        renderItem={ItemList}
+        renderItem={( {item} ) => <ChatRoomItem chatRoom={item}/>}
         keyExtractor={item => `key-${item.unique_id}`}
         showsVerticalScrollIndicator={false}
         ListHeaderComponent={() => <FlatList
@@ -287,8 +241,8 @@ const styles = StyleSheet.create({
       // top: 10,
   },
 
-  ActiveNow: {
-    color: '16D0FE'
+  statusTS: {
+    color: '#16D0FE'
   }
 
 });

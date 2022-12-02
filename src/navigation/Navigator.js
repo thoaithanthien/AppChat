@@ -1,9 +1,11 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { useWindowDimensions, View, Text, Image } from 'react-native';
+import { useWindowDimensions, View, Text, Image, TouchableOpacity } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign'
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+
 /////////////////////////////////////////
 import Home from '../screens/Home';
 import Setting from '../screens/Settings';
@@ -17,6 +19,7 @@ import LoginScreen from '../loginRegister/screens/LoginScreen';
 import RegisterScreen from '../loginRegister/screens/RegisterScreen';
 import ForgotPassword from '../loginRegister/screens/ForgotPassword';
 import SecurityQuestion from '../loginRegister/screens/SecurityQuestion';
+
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -100,6 +103,19 @@ const BottomTabNavigator = () => {
 
 const MessageHeader = (props) => {
     const { width } = useWindowDimensions();
+    // camera
+const openCamera = () => {
+    const options = {
+      storageOptions: {
+        path: 'images',
+        mediaType: 'photo',
+      },
+      includeBase64: true,
+    };
+    launchCamera(options, response => {
+      console.log('response', response);
+    });
+  };
     return (
         <View style={{
             flexDirection: 'row',
@@ -111,8 +127,12 @@ const MessageHeader = (props) => {
                 source={{ uri: 'https://i.pinimg.com/736x/99/8b/76/998b76aa2e21e43e25970bb72bfeda98.jpg'}}
                 style={{width: 30, height: 30, borderRadius: 30}}/> */}
             <Text style={{flex: 1, textAlign: 'center', fontWeight: 'bold'}}>Message</Text>
+            <TouchableOpacity onPress={openCamera}>
             <Ionicons name="camera-outline" size={24} color="black" style={{marginRight: 15}}/>
-            <AntDesign name="edit" size={24} color="black" style={{marginRight: 84}}/>         
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => {}}>
+            <AntDesign name="edit" size={24} color="black" style={{marginRight: 84}}/>      
+            </TouchableOpacity>   
         </View>
     )
 }
