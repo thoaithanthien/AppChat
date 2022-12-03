@@ -21,15 +21,14 @@ export const registerAPI = (Email, Password) => {
         }
     ).then((response) => response.json())
         .then((response) => {
-            if(response = "Updated")
+            if(response == "Updated")
             alert("Change password success");
-
+            if (response == "Not Updated") {
+                alert("Email Wrong")
+            }
         })
         .catch((error) => {
-            if (error = "Not Updated") {
-                alert("Email Wrong")
-            } else (
-                alert("Error: " + error))
+                alert("Error: " + error)
         })
 }
 

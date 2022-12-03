@@ -10,109 +10,89 @@ import { StyleSheet,
     TouchableWithoutFeedback } from 'react-native'
     import React, { useState } from 'react';
     import  MaterialIcons  from 'react-native-vector-icons/MaterialIcons'
-    import ArtDesign from 'react-native-vector-icons/AntDesign'
-    // import { registerAPI } from '../config/APIReset';    
-    import { BASE_URL } from '../../loginRegister/config/API';
+    import Ionicons from 'react-native-vector-icons/Ionicons'
+    import { registerAPI } from '../config/APIReset';    
 
-    const SetQuestion = ({navigation}) => {
+    const Register = ({navigation, route}) => {
         
-        const [question, setQuestion] = useState('');
-        const [answer, setAnswer] = useState('');
-
-        const registerQuestion = () => {
-            var insertQuestionAPI = BASE_URL + 'createQuestion.php';
-            var headers = {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            };
-
-            var data = {
-                question: question,
-                answer: answer
-            };
-
-            fetch(insertQuestionAPI, {
-                method: 'POST',
-                headers: headers,
-                body: JSON.stringify(data),
-            })
-                .then(response => response.json())
-                .then(response => {
-                    if ((response == 'Dang ky thanh cong')) {
-                        alert("Thành công")
-                        navigation.navigate("Settings");
-                    }
-
-                    if(response == 'Email has Security question!'){
-                        alert('Email đã có câu hỏi bảo mật');
-                    }
-
-
-                })
-                .catch(error => {
-                        alert('Error: ' + error);
-                    
-                });
-        }
-        const insertQuestion = () => {
+        var email = route.params.email;
+        console.log(email);
+        // const [email, setEmail] = useState('')
+        const [password, setPassword] = useState('');
+        const [CFpassword, setCFpassword] = useState('');
     
-            if (question.length == 0 || answer.length == 0) {
+        const insert = () => {
+            // navigation.navigate('Security');
+            if (password.length == 0 || CFpassword.length == 0) {
                 alert("Vui lòng nhập đầy đủ thông tin")
-            }    
-            else { registerQuestion() }
+            } else if (password !== CFpassword) {
+                alert("Mật khẩu không giống nhau")
+            }
     
-            setAnswer('');
-            setQuestion('');
+            else { registerAPI(email, password, navigation) }
+    
+            setPassword('');
+            setCFpassword('');
             Keyboard.dismiss();
         }
       return (
         <SafeAreaView style={styles.container}>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View style={{paddingHorizontal: 25}}>
-                <Text style={styles.text}>Question Security</Text>
+                <View style={{alignItems: 'center'}}>
+                    <Image style={styles.img} source={require('../../assets/img/authentication.png')}/>
+                </View>
+                <Text style={styles.text}>Update Password</Text>
                 
                 {/* Forgot */}
-                <View style={styles.question}>       
-                    <Text style={styles.textQuestion}>Ask your question and answer</Text>
-                </View>
     
-                <View style={styles.input}>
-                <ArtDesign name='questioncircle' size={20} color='#666' 
-                    style={styles.icon}/>
-                    <TextInput placeholder='Question' 
+                {/* <View style={styles.input}>
+                    <MaterialIcons name='alternate-email' size={20} color='#666' 
+                    style={styles.icon}/> 
+                    <TextInput placeholder='Email ID' 
                     keyboardType='email-address' 
-                    onChangeText={setQuestion}
-                    value={question}
+                    onChangeText={setEmail}
+                    value={email}
                     style={styles.textInput}/>
-                </View>
+                </View> */}
     
                 <View style={styles.input}>
-                <MaterialIcons name='question-answer' size={20} color='#666' 
-                    style={styles.icon}/>
-                    <TextInput placeholder='Answer'
-                    onChangeText={setAnswer}
-                    value={answer}
+                    <Ionicons name='lock-closed-outline' size={20} color='#666' 
+                    style={styles.icon}/> 
+                    <TextInput placeholder='Password'
+                    onChangeText={setPassword}
+                    value={password}
                     style={styles.textInput}
                     secureTextEntry={true}/>
                 </View>
     
-                <TouchableOpacity onPress={() => { insertQuestion() }} style={styles.btnLogin}>
+                <View style={styles.input}>
+                    <Ionicons name='lock-closed-outline' size={20} color='#666' 
+                    style={styles.icon}/> 
+                    <TextInput placeholder='Confirm password'
+                    onChangeText={setCFpassword}
+                    value={CFpassword}
+                    style={styles.textInput}
+                    secureTextEntry={true}/>
+                </View>
+    
+                <TouchableOpacity onPress={() => { insert() }} style={styles.btnLogin}>
                         <Text style={styles.textLogin}>Confirm</Text>
                 </TouchableOpacity>
     
                 <View style={styles.connectRegister}>
-                    <Text>Are you?</Text>
-                    <TouchableOpacity onPress={() => { navigation.navigate('Setting')}}>
-                        <Text style={styles.textConnectRegister}> Back</Text>
+                    <Text>Already registered?</Text>
+                    <TouchableOpacity onPress={() => { navigation.navigate('Login')}}>
+                        <Text style={styles.textConnectRegister}> Login</Text>
                     </TouchableOpacity>
                 </View>
 
-                {/* <View style={styles.connectRegister}>
+                <View style={styles.connectRegister}>
                     <Text>Already registered?</Text>
                     <TouchableOpacity onPress={() => { navigation.navigate('Register')}}>
                         <Text style={styles.textConnectRegister}> Register</Text>
                     </TouchableOpacity>
-                </View> */}
+                </View>
     
             </View>
             </TouchableWithoutFeedback>
@@ -145,20 +125,6 @@ import { StyleSheet,
             borderBottomWidth: 1,
             paddingBottom: 8,
             marginBottom: 25
-        },
-
-        question: {
-            alignItems: 'center',
-            borderBottomWidth: 1,
-            borderRadius: 5,
-            paddingBottom: 8,
-            marginBottom: 25
-        },
-
-        textQuestion: {
-            fontSize: 25,
-            fontWeight: '500',
-            marginTop: 5
         },
         
         icon: {
@@ -216,4 +182,4 @@ import { StyleSheet,
     
     });
     
-    export default SetQuestion;
+    export default Register

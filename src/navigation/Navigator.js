@@ -19,6 +19,7 @@ import LoginScreen from '../loginRegister/screens/LoginScreen';
 import RegisterScreen from '../loginRegister/screens/RegisterScreen';
 import ForgotPassword from '../loginRegister/screens/ForgotPassword';
 import SecurityQuestion from '../loginRegister/screens/SecurityQuestion';
+import UpdatePassword from '../loginRegister/screens/UpdatePassword';
 
 
 const Tab = createBottomTabNavigator();
@@ -54,6 +55,7 @@ const Stack = createNativeStackNavigator();
         <Stack.Screen name="MessageStack" component={MessageStack}/>
         <Stack.Screen name="Setting" component={SettingScreen} />
         <Stack.Screen name="Security" component={SecurityQuestion} />
+        <Stack.Screen name="UpdatePassword" component={UpdatePassword} />
         {/* <Stack.Screen name="Bottom" component={BottomTabNavigator} /> */}
     </Stack.Navigator>
     )
