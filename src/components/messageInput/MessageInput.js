@@ -14,15 +14,13 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import EmojiSelector from 'react-native-emoji-selector';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
-import { useRoute, useNavigation } from '@react-navigation/native';
+import {useRoute, useNavigation} from '@react-navigation/native';
 
-
-const MessageInput = ({ route }) => {
-
+const MessageInput = ({route}) => {
   var user = route.params.users;
   var unique_id = route.params.unique_id;
 
-  console.log(user, unique_id)
+  console.log(user, unique_id);
   const [message, setMessage] = useState('');
   const [isEmojiPickerOpen, setIsEmojiPickerOpen] = useState(false);
   const [image, setImage] = useState(null);
@@ -53,25 +51,25 @@ const MessageInput = ({ route }) => {
   };
 
   const sendMessage = () => {
-    const URL = "http://192.168.201.1:8080/users/api/createRoom.php"
+    const URL = 'http://192.168.201.1:8080/users/api/createRoom.php';
     var Data = {
-        incoming_msg_id: user,
-        outgoing_msg_id: unique_id,
-        msg: message
-    }
+      incoming_msg_id: user,
+      outgoing_msg_id: unique_id,
+      msg: message,
+    };
     const headers = {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
     };
     fetch(URL, {
-        method: 'POST',
-        headers: headers,
-        body: JSON.stringify(Data)
+      method: 'POST',
+      headers: headers,
+      body: JSON.stringify(Data),
     })
-        .then((res) => res.json())
-        .catch((error) => {
-            console.log('Error: ', error)
-        })
+      .then(res => res.json())
+      .catch(error => {
+        console.log('Error: ', error);
+      });
 
     console.warn(message);
     setMessage('');
@@ -82,7 +80,7 @@ const MessageInput = ({ route }) => {
   const onPlusClicked = () => {
     console.warn('No message');
   };
-  
+
   const onPress = () => {
     if (message) {
       sendMessage();
@@ -96,15 +94,17 @@ const MessageInput = ({ route }) => {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={[styles.root, {height: isEmojiPickerOpen ? '60%' : 'auto'}]}
       keyboardVerticalOffset={100}>
-
       {image && (
-        <Image source={{uri: image}} style={{width: 100, height: 100}}/>
+        <Image source={{uri: image}} style={{width: 100, height: 100}} />
       )}
 
       <View style={styles.row}>
         <View style={styles.inputContainer}>
           <Pressable
-            onPress={() => [setIsEmojiPickerOpen(currentValue => !currentValue), Keyboard.dismiss()]}>
+            onPress={() => [
+              setIsEmojiPickerOpen(currentValue => !currentValue),
+              Keyboard.dismiss(),
+            ]}>
             <Icon
               name="emotsmile"
               size={24}
@@ -123,8 +123,13 @@ const MessageInput = ({ route }) => {
             <Ionicons name="image-outline" size={24} color="grey" />
           </Pressable>
           <Pressable onPress={openCamera}>
-          <Icon name="camera" size={24} color="grey" style={styles.iconEmoji} />
-         </Pressable>
+            <Icon
+              name="camera"
+              size={24}
+              color="grey"
+              style={styles.iconEmoji}
+            />
+          </Pressable>
           <Icon
             name="microphone"
             size={24}

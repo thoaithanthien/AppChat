@@ -14,10 +14,10 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {BASE_URL} from '../config/API';
 import socketIO from 'socket.io-client';
-import { URL_ENDPOINT } from '../../utils/URL_ENDPOINT';
+import {URL_ENDPOINT} from '../../utils/URL_ENDPOINT';
 
 const ENDPOINT = URL_ENDPOINT;
-const socket = socketIO(ENDPOINT)
+const socket = socketIO(ENDPOINT);
 
 const Login = ({navigation}) => {
   const [email, setEmail] = useState('');
@@ -63,10 +63,8 @@ const Login = ({navigation}) => {
     setEmail('');
     setPassword('');
     Keyboard.dismiss();
-    
   };
 
-  
   return (
     <SafeAreaView style={styles.container}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -110,7 +108,10 @@ const Login = ({navigation}) => {
               style={styles.textInput}
               secureTextEntry={true}
             />
-            <TouchableOpacity onPress={() => { navigation.navigate('Forgot')}}>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('Forgot');
+              }}>
               <Text style={styles.textForgot}>Forgot?</Text>
             </TouchableOpacity>
           </View>
