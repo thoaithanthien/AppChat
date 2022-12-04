@@ -29,6 +29,7 @@ export default function IsActive({ chatRoom }) {
 
   const ItemUser = ({item}) => {
     user_id = item.unique_id;
+    console.log(user_id);
   };
 
   useEffect(() => {

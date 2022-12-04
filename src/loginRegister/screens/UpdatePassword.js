@@ -11,12 +11,12 @@ import { StyleSheet,
     import React, { useState } from 'react';
     import  MaterialIcons  from 'react-native-vector-icons/MaterialIcons'
     import Ionicons from 'react-native-vector-icons/Ionicons'
-    import { registerAPI } from '../config/APIReset';    
+    import { updatePassword } from '../config/APIReset';    
 
     const Register = ({navigation, route}) => {
         
         var email = route.params.email;
-        console.log(email);
+        // console.log(email);
         // const [email, setEmail] = useState('')
         const [password, setPassword] = useState('');
         const [CFpassword, setCFpassword] = useState('');
@@ -29,7 +29,7 @@ import { StyleSheet,
                 alert("Mật khẩu không giống nhau")
             }
     
-            else { registerAPI(email, password, navigation) }
+            else { updatePassword(email, password, navigation) }
     
             setPassword('');
             setCFpassword('');

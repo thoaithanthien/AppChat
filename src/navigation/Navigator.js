@@ -53,7 +53,10 @@ const Stack = createNativeStackNavigator();
         <Stack.Screen name="Register" component={RegisterScreen}/>
         <Stack.Screen name="Forgot" component={ForgotPassword}/>
         <Stack.Screen name="MessageStack" component={MessageStack}/>
-        <Stack.Screen name="Setting" component={SettingScreen} />
+        {/* <Stack.Screen name="Setting" component={SettingScreen} /> */}
+        <Stack.Screen name="Settings" component={Setting}/>
+        <Stack.Screen name="SetQuestion" component={SetQuestion}/>
+        <Stack.Screen name="ChangePass" component={ChangePass}/>
         <Stack.Screen name="Security" component={SecurityQuestion} />
         <Stack.Screen name="UpdatePassword" component={UpdatePassword} />
         {/* <Stack.Screen name="Bottom" component={BottomTabNavigator} /> */}
@@ -150,7 +153,7 @@ const ChatRoomHeader = (props) => {
             marginRight: 150,
             alignItems: 'center'}}>
             <Image 
-                source={{ uri: 'https://i.pinimg.com/736x/99/8b/76/998b76aa2e21e43e25970bb72bfeda98.jpg'}}
+                source={{uri: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png'}}
                 style={{width: 30, height: 30, borderRadius: 30}}/>
             <Text style={{flex: 1, fontWeight: 'bold', marginLeft: 10}}>{props.children}</Text>
             <Ionicons name="md-videocam-outline" size={26} color="black" style={{marginRight: 10}}/>

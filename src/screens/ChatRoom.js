@@ -19,14 +19,16 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import EmojiSelector from 'react-native-emoji-selector';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import { URL_ENDPOINT } from '../utils/URL_ENDPOINT';
 
-const ENDPOINT = "http://192.168.1.4:3000";
+const ENDPOINT = URL_ENDPOINT;
 const socket = socketIO(ENDPOINT)
 export default function ChatRoom({ route }) {
 
     var users = route.params.users;
     var unique_id = route.params.unique_id;
     var username = route.params.username;
+    // var img = route.params.img;
     const [ListMess, setListMess] = useState([]);
     const [message, setMessage] = useState('');
     
@@ -162,7 +164,8 @@ export default function ChatRoom({ route }) {
     const navigation = useNavigation();
 
     // console.warn(route.params?.id);
-    navigation.setOptions({title: username})
+    navigation.setOptions({title: username});
+    // navigation.setOptions({image: img});
 
     return(
         <SafeAreaView style={[styles.page, style={flex: 1}]}>

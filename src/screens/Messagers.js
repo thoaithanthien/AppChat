@@ -2,13 +2,12 @@ import {StyleSheet, SafeAreaView, FlatList, View, Text, TouchableOpacity, Image,
 import React, { useState, useEffect } from 'react';
 import ChatRoomItem from '../components/chatRoomItem';
 import IsActive from '../components/active/IsActive';
-import chatRoomsData from '../dummy/ChatRoomData';
 import {BASE_URL, URL} from '../loginRegister/config/API';
 import socketIO from "socket.io-client";
 import axios from 'axios';
 import Icon from "react-native-vector-icons/Ionicons";
 import {launchImageLibrary} from 'react-native-image-picker';
-import { updateImg } from '../loginRegister/config/updateImg';  
+import { URL_ENDPOINT } from '../utils/URL_ENDPOINT';
 
 const options = {
     selectionLimit: 1,
@@ -17,11 +16,10 @@ const options = {
   };
 
 
-const ENDPOINT = "http://192.168.1.4:3000";
+const ENDPOINT = URL_ENDPOINT;
 const socket = socketIO(ENDPOINT)
 const Messager = ( {navigation} ) => {
   var user_id = "";
-  // var unique_id = "";
 
   const [dataList, setDataList] = useState([]);
   const [dataUser, setDataUser] = useState([]);
@@ -37,7 +35,7 @@ const Messager = ( {navigation} ) => {
       img : images.assets[0].base64
       // img: img
   };  
-    fetch(URL, {
+  await fetch(URL, {
       method: 'PUT', // or 'PUT'
       headers: {
         Accept: 'application/json',
@@ -108,6 +106,7 @@ const Messager = ( {navigation} ) => {
     user_id = item.unique_id;
     var email = item.email;
     var img =  item.img;
+    var username = item.username;
     // console.log(img);
     return (
     <TouchableOpacity onPress={() => {}} style={styles.container}>
@@ -123,10 +122,11 @@ const Messager = ( {navigation} ) => {
             <Text style={styles.name}>{`${user_id}`}</Text>
           </View>
             <Text numberOfLines={1} style={styles.text}>{`${email}`}</Text>
+            <Text numberOfLines={1} style={styles.text}>{`${username}`}</Text>
             <Text numberOfLines={1} style={styles.statusTS}>Active Now</Text>
         </View>
         <TouchableOpacity onPress={() => {
-              navigation.navigate('Setting');
+              navigation.navigate('Settings', {email: email});
         }}>
             <Icon name="arrow-forward" size={30} style={styles.icon}/>
         </TouchableOpacity>
@@ -165,8 +165,6 @@ const Messager = ( {navigation} ) => {
           horizontal/>}/>
     </SafeAreaView>
   );
-
-  console.log(user_id);
 };
 
 const styles = StyleSheet.create({

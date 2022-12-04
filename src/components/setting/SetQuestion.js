@@ -11,7 +11,6 @@ import { StyleSheet,
     import React, { useState } from 'react';
     import  MaterialIcons  from 'react-native-vector-icons/MaterialIcons'
     import ArtDesign from 'react-native-vector-icons/AntDesign'
-    // import { registerAPI } from '../config/APIReset';    
     import { BASE_URL } from '../../loginRegister/config/API';
 
     const SetQuestion = ({navigation}) => {
@@ -102,7 +101,7 @@ import { StyleSheet,
     
                 <View style={styles.connectRegister}>
                     <Text>Are you?</Text>
-                    <TouchableOpacity onPress={() => { navigation.navigate('Setting')}}>
+                    <TouchableOpacity onPress={() => { navigation.goBack()}}>
                         <Text style={styles.textConnectRegister}> Back</Text>
                     </TouchableOpacity>
                 </View>

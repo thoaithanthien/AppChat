@@ -23,6 +23,7 @@ export default function ChatRoomItem({ chatRoom }) {
     { unique_id: unique_id,
       username: username,
       msg: msg,
+      img: img,
       date: date,
       status: status,
       users: user_id
