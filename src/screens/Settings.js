@@ -108,7 +108,7 @@ const SettingScreen = ({navigation, route}) => {
             </View>
             <View style={styles.colum}>
               <TextInput
-                style={styles.name}
+                style={styles.nameTextInput}
                 placeholder={`${username}`}
                 onChangeText={setName}
                 value={name}></TextInput>
@@ -184,14 +184,14 @@ const SettingScreen = ({navigation, route}) => {
           />
         </TouchableOpacity>
         <Text style={styles.title}>Settings</Text>
-        <View style={styles.smallContainer}>
+        {/* <View style={styles.smallContainer}>
           <Icon
             name="person"
             size={20}
             style={[styles.blackIcon, styles.icon2]}
           />
           <Text style={styles.title2}>Account</Text>
-        </View>
+        </View> */}
         <TouchableOpacity onPress={() => {}}>
           <FlatList
             style={styles.viewUser}
@@ -222,7 +222,7 @@ const SettingScreen = ({navigation, route}) => {
               size={20}
               style={styles.blackIcon}></Icon>
           </TouchableOpacity>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={styles.touchableContainer}
             onPress={() => {
               navigation.navigate('ChangePass');
@@ -232,14 +232,14 @@ const SettingScreen = ({navigation, route}) => {
               name="chevron-forward-outline"
               size={20}
               style={styles.blackIcon}></Icon>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.touchableContainer}>
+          </TouchableOpacity> */}
+          {/* <TouchableOpacity style={styles.touchableContainer}>
             <Text style={styles.title3}>Privacy</Text>
             <Icon
               name="chevron-forward-outline"
               size={20}
               style={styles.blackIcon}></Icon>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
         {/* More --------------- */}
         <View style={styles.smallContainer}>
@@ -378,8 +378,8 @@ const styles = StyleSheet.create({
   },
 
   image: {
-    width: 70,
-    height: 70,
+    width: 80,
+    height: 80,
     borderRadius: 50,
     marginBottom: 5,
   },
@@ -401,7 +401,13 @@ const styles = StyleSheet.create({
 
   name: {
     fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: 20,
+  },
+
+  nameTextInput: {
+    fontWeight: 'bold',
+    fontSize: 20,
+    paddingHorizontal: 30
   },
 
   statusTS: {
@@ -409,10 +415,10 @@ const styles = StyleSheet.create({
   },
 
   btnLogin: {
-    backgroundColor: '#000',
+    backgroundColor: '#ad40af',
     padding: 7,
     borderRadius: 2,
-    marginTop: 5,
+    paddingHorizontal: 25
   },
 });
 

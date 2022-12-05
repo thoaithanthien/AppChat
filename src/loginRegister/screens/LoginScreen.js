@@ -45,17 +45,15 @@ const Login = ({navigation}) => {
       })
         .then(response => response.json())
         .then(response => {
-          if ((response = 'Dang nhap thanh cong')) {
+          if (response == 'Dang nhap thanh cong') {
             // alert('Đăng nhập thành công');
             navigation.navigate('MessageStack');
             socket.emit('login');
           }
         })
         .catch(error => {
-          if ((error = ' Wrong')) {
+          if (error == 'Email hoac mat khau khong hop le') {
             alert('Sai Email hoặc mật khẩu');
-          } else {
-            alert('Error: ' + error);
           }
         });
     }

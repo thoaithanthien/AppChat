@@ -245,7 +245,7 @@ const Messager = ({navigation}) => {
             onPress={() => {
               navigation.navigate('Settings', {email: email});
             }}>
-            <Icon name="arrow-forward" size={30} style={styles.icon} />
+            <Icon name="ios-settings-outline" size={30} style={styles.icon} />
           </TouchableOpacity>
         </View>
       </TouchableOpacity>

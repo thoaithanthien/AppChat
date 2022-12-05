@@ -13,10 +13,8 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 
 /////////////////////////////////////////
-import Home from '../screens/Home';
 import Setting from '../screens/Settings';
 import Message from '../screens/Messagers';
-import Friend from '../screens/Friend';
 import ChatRoom from '../screens/ChatRoom';
 import ChangePass from '../components/setting/ChangePass';
 import SetQuestion from '../components/setting/SetQuestion';
@@ -26,6 +24,7 @@ import RegisterScreen from '../loginRegister/screens/RegisterScreen';
 import ForgotPassword from '../loginRegister/screens/ForgotPassword';
 import SecurityQuestion from '../loginRegister/screens/SecurityQuestion';
 import UpdatePassword from '../loginRegister/screens/UpdatePassword';
+import { HeaderBackButton } from 'react-navigation-stack';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -53,7 +52,7 @@ function SettingScreen() {
     <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="Settings" component={Setting} />
       <Stack.Screen name="SetQuestion" component={SetQuestion} />
-      <Stack.Screen name="ChangePass" component={ChangePass} />
+      {/* <Stack.Screen name="ChangePass" component={ChangePass} /> */}
     </Stack.Navigator>
   );
 }
@@ -68,7 +67,7 @@ const LoginRegister = () => {
       {/* <Stack.Screen name="Setting" component={SettingScreen} /> */}
       <Stack.Screen name="Settings" component={Setting} />
       <Stack.Screen name="SetQuestion" component={SetQuestion} />
-      <Stack.Screen name="ChangePass" component={ChangePass} />
+      {/* <Stack.Screen name="ChangePass" component={ChangePass} /> */}
       <Stack.Screen name="Security" component={SecurityQuestion} />
       <Stack.Screen name="UpdatePassword" component={UpdatePassword} />
       {/* <Stack.Screen name="Bottom" component={BottomTabNavigator} /> */}

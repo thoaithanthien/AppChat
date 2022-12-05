@@ -40,7 +40,7 @@ const SetQuestion = ({navigation}) => {
       .then(response => {
         if (response == 'Dang ky thanh cong') {
           alert('Thành công');
-          navigation.navigate('Settings');
+          // navigation.navigate('Settings');
         }
 
         if (response == 'Email has Security question!') {

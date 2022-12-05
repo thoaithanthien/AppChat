@@ -20,7 +20,7 @@ export const updatePassword = (Email, Password) => {
   })
     .then(response => response.json())
     .then(response => {
-      if (response == 'Updated') alert('Change name success');
+      if (response == 'Updated') alert('Change password success');
       if (response == 'Not Updated') {
         alert('Email Wrong');
       }

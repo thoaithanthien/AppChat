@@ -14,7 +14,6 @@ import {
 } from 'react-native';
 import MessageInput from '../components/messageInput/MessageInput';
 import Message from '../components/messages/Message';
-import chatRoomData from '../dummy/Chats';
 import {useRoute, useNavigation} from '@react-navigation/native';
 import {BASE_URL} from '../loginRegister/config/API';
 import socketIO from 'socket.io-client';

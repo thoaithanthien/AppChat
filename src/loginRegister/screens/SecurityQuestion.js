@@ -57,7 +57,7 @@ const SecurityQuestion = ({navigation, route}) => {
       alert('Câu trả lời đúng');
       navigation.navigate('UpdatePassword', {email: email});
     } else {
-      alert('Câu trả lời sai');
+      alert('Câu trả lời không đúng');
     }
   };
 
